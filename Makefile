@@ -1,18 +1,17 @@
+CC = cc
 NAME = minitalk
 FLAGS = -Wall -Wextra -Werror
 
 SRCS =	client.c \
 		server.c
 
-all:
 
 s:
-	gcc $(FLAGS) minitalk_utils.c server.c -o server
-	./server
+	@$(CC) $(FLAGS) minitalk_utils.c server.c -o server
+	@./server
 
 c:
-	gcc $(FLAGS) minitalk_utils.c client.c -o client
-	# ./client 1000 "sdfsfsf"
+	@$(CC) $(FLAGS) minitalk_utils.c client.c -o client
 
 clean:
 	rm -rf $(OBJS)

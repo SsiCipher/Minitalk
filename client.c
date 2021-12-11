@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	int		j;
 
 	if (argc != 3)
-		printf("Wrong parameters !!!\n");
+		printf("Usage: ./client <Server PID> <Message>\n");
 	else
 	{
 		server_pid = ft_atoi(argv[1]);
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 					kill(server_pid, SIGUSR1);
 				else
 					kill(server_pid, SIGUSR2);
-				usleep(500);
+				pause();
 				j++;
 			}
 			i++;
