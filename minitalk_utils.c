@@ -41,6 +41,25 @@ int	ft_atoi(const char *nstr)
 	return (num * sign);
 }
 
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	int		s_len;
+	char	*dupicate;
+
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	dupicate = (char *)malloc(sizeof(char) * (s_len + 1));
+	if (!dupicate)
+		return (NULL);
+	i = -1;
+	while (s[++i])
+		dupicate[i] = s[i];
+	dupicate[i] = '\0';
+	return (dupicate);
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
@@ -48,7 +67,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		s2_len;
 	char	*joined_str;
 
-	if (s1 == NULL || s2 == NULL)
+	if (s1 == NULL && s2 == NULL)
 		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
