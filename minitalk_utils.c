@@ -1,5 +1,15 @@
 #include "minitalk.h"
 
+size_t	ft_strlen(const char *s)
+{
+	int	len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
 int	ft_isspace(int c)
 {
 	return (
@@ -10,16 +20,6 @@ int	ft_isspace(int c)
 		|| c == '\t'
 		|| c == '\v'
 	);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
 }
 
 int	ft_atoi(const char *nstr)
@@ -41,32 +41,30 @@ int	ft_atoi(const char *nstr)
 	return (num * sign);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t		i;
-	char		*char_dest;
-	char		*char_src;
+	int		i;
+	int		s1_len;
+	int		s2_len;
+	char	*joined_str;
 
-	if (!dest && !src)
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	s1_len = ft_strlen((char *)s1);
+	s2_len = ft_strlen((char *)s2);
+	joined_str = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (!joined_str)
 		return (NULL);
 	i = -1;
-	char_dest = (char *)dest;
-	char_src = (char *)src;
-	while (++i < n)
-		char_dest[i] = char_src[i];
-	return (dest);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		s_len;
-	char	*dupicate;
-
-	s_len = ft_strlen(s);
-	dupicate = (char *)malloc(sizeof(char) * (s_len + 1));
-	if (!dupicate)
-		return (NULL);
-	ft_memcpy(dupicate, s, s_len);
-	dupicate[s_len] = '\0';
-	return (dupicate);
+	while (s1[++i])
+		joined_str[i] = s1[i];
+	i = -1;
+	while (s2[++i])
+		joined_str[s1_len + i] = s2[i];
+	joined_str[s1_len + i] = '\0';
+	return (joined_str);
 }

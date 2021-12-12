@@ -1,32 +1,32 @@
 #include "minitalk.h"
 
-int shift = 0;
-unsigned char chr = 0b00000000;
+t_char *g_c;
 
 void assemble_char(unsigned char *n, int bit, int *shift)
 {
+	*n |= bit;
+	if (*shift != 7)
+		(*n) <<= 1;
+	*shift += 1;
 	if(*shift == 8)
 	{
 		write(1, n, 1);
 		*n = 0b00000000;
 		*shift = 0;
 	}
-	*n |= bit;
-	if (*shift != 7)
-		(*n) <<= 1;
-	*shift += 1;
 }
 
 void handle_input(int sig)
 {
-	if (sig == SIGUSR1)
-		assemble_char(&chr, 0, &shift);
-	else
-		assemble_char(&chr, 1, &shift);
+	assemble_char(&(g_c->chr), sig != SIGUSR1, &(g_c->shift));
 }
 
 int main(void)
 {
+	g_c = (t_char *)malloc(sizeof(t_char));
+	g_c->shift = 0;
+	g_c->chr = 0b00000000;
+
 	printf("The Server's PID is [%d]\n", getpid());
 	signal(SIGUSR1, handle_input);
 	signal(SIGUSR2, handle_input);
