@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/12 23:29:19 by yanab             #+#    #+#             */
+/*   Updated: 2021/12/12 23:31:04 by yanab            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINITALK_H
 # define MINITALK_H
 
@@ -6,7 +18,7 @@
 # include <signal.h>
 # include <stdio.h> // REMOVE LATER
 
-typedef struct	s_char
+typedef struct s_char
 {
 	int				shift;
 	unsigned char	chr;

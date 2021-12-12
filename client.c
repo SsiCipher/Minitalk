@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/12 23:29:03 by yanab             #+#    #+#             */
+/*   Updated: 2021/12/12 23:35:03 by yanab            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
-int get_nth_bit(unsigned char c, int n)
+int	get_nth_bit(unsigned char c, int n)
 {
 	unsigned char	comp_c;
 
@@ -8,10 +20,25 @@ int get_nth_bit(unsigned char c, int n)
 	return ((c & (comp_c >> (n - 1))) >> (8 - n));
 }
 
-int main(int argc, char **argv)
+void	send_char(int server_pid, char chr)
+{
+	int	j;
+
+	j = 1;
+	while (j <= 8)
+	{
+		if (!get_nth_bit(chr, j))
+			kill(server_pid, SIGUSR1);
+		else
+			kill(server_pid, SIGUSR2);
+		usleep(100);
+		j++;
+	}
+}
+
+int	main(int argc, char **argv)
 {
 	int		i;
-	int		j;
 	int		server_pid;
 	char	*message;
 
@@ -19,25 +46,11 @@ int main(int argc, char **argv)
 		printf("Usage: ./client <Server PID> <Message>\n");
 	else
 	{
+		i = 0;
 		server_pid = ft_atoi(argv[1]);
 		message = ft_strjoin(argv[2], "\n");
-
-		i = 0;
 		while (message[i])
-		{ 
-			j = 1;
-			while (j <= 8)
-			{
-				if (!get_nth_bit(message[i], j))
-					kill(server_pid, SIGUSR1);
-				else
-					kill(server_pid, SIGUSR2);
-				usleep(100);
-				j++;
-			}
-			i++;
-		}
+			send_char(server_pid, message[i++]);
 	}
-
 	return (0);
 }
