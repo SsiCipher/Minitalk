@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   put_unbr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 23:29:19 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:26:58 by yanab            ###   ########.fr       */
+/*   Created: 2021/11/26 21:59:56 by yanab             #+#    #+#             */
+/*   Updated: 2021/11/29 20:03:30 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include "ft_printf/ft_printf.h"
-
-typedef struct s_char
+int	put_unbr(unsigned int nbr)
 {
-	int				shift;
-	unsigned char	chr;
-}	t_char;
+	unsigned int	num;
 
-int		ft_isspace(int c);
-size_t	ft_strlen(const char *s);
-int		ft_atoi(const char *nstr);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-#endif
+	if (nbr >= 10)
+		put_unbr(nbr / 10);
+	num = nbr % 10 + '0';
+	write(1, &num, 1);
+	return (numlen(nbr));
+}

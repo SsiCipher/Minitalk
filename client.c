@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:29:03 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:01:44 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/13 03:18:38 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_char(int server_pid, char chr)
 void	confirm_sent(int sig)
 {
 	(void)sig;
-	write(1, "A bit has been sent successfully.\n", 35);
+	ft_printf("A bit has been sent successfully.\n");
 }
 
 int	main(int argc, char **argv)
@@ -49,7 +49,7 @@ int	main(int argc, char **argv)
 	char	*message;
 
 	if (argc != 3)
-		printf("Usage: ./client <Server PID> <Message>\n");
+		ft_printf("Usage: ./client <Server PID> <Message>\n");
 	else
 	{
 		i = 0;

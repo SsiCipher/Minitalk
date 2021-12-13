@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   put_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 23:29:19 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:26:58 by yanab            ###   ########.fr       */
+/*   Created: 2021/11/26 21:58:34 by yanab             #+#    #+#             */
+/*   Updated: 2021/12/13 03:18:20 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include "ft_printf/ft_printf.h"
-
-typedef struct s_char
+int	put_char(char c)
 {
-	int				shift;
-	unsigned char	chr;
-}	t_char;
-
-int		ft_isspace(int c);
-size_t	ft_strlen(const char *s);
-int		ft_atoi(const char *nstr);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-#endif
+	return (write(1, &c, 1));
+}

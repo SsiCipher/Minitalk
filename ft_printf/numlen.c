@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   numlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 23:29:19 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:26:58 by yanab            ###   ########.fr       */
+/*   Created: 2021/11/29 16:20:57 by yanab             #+#    #+#             */
+/*   Updated: 2021/11/29 20:36:22 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
-# include "ft_printf/ft_printf.h"
-
-typedef struct s_char
+int	numlen(unsigned int nbr)
 {
-	int				shift;
-	unsigned char	chr;
-}	t_char;
+	int	total;
 
-int		ft_isspace(int c);
-size_t	ft_strlen(const char *s);
-int		ft_atoi(const char *nstr);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-#endif
+	total = 0;
+	if (nbr == 0)
+		return (1);
+	while (nbr > 0)
+	{
+		total += 1;
+		nbr /= 10;
+	}
+	return (total);
+}
