@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:29:03 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/12 23:35:03 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/13 03:01:44 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ void	send_char(int server_pid, char chr)
 	}
 }
 
+void	confirm_sent(int sig)
+{
+	(void)sig;
+	write(1, "A bit has been sent successfully.\n", 35);
+}
+
 int	main(int argc, char **argv)
 {
 	int		i;
@@ -49,6 +55,7 @@ int	main(int argc, char **argv)
 		i = 0;
 		server_pid = ft_atoi(argv[1]);
 		message = ft_strjoin(argv[2], "\n");
+		signal(SIGUSR1, confirm_sent);
 		while (message[i])
 			send_char(server_pid, message[i++]);
 	}
