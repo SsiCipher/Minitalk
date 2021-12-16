@@ -1,31 +1,29 @@
-CC = cc
-NAME = minitalk
-FLAGS = -Wall -Wextra -Werror
+CC		=	cc
+NAME	=	minitalk
+FLAGS	=	-Wall -Wextra -Werror
 
-SRCS =	client.c \
-		server.c
+CLIENT	=	client
+SERVER	=	server
 
-all: $(NAME)
+all:	ft_printf $(NAME)
 
-$(NAME): ft_printf s c
+$(NAME):	$(SERVER) $(CLIENT)
 
 ft_printf:
-	make -C ft_printf
-	make -C ft_printf clean
+	@make -C ft_printf
 
-s:
+$(SERVER): server.c minitalk_utils.c minitalk.h
 	$(CC) $(FLAGS) minitalk_utils.c ft_printf/libftprintf.a server.c -o server
 
-c:
+$(CLIENT): client.c minitalk_utils.c minitalk.h
 	$(CC) $(FLAGS) minitalk_utils.c ft_printf/libftprintf.a client.c -o client
 
 clean:
-	rm -rf client
-	rm -rf server
-	make -C ft_printf clean
+	@make -C ft_printf clean
 
-fclean: clean
-	make -C ft_printf fclean
+fclean:
+	rm -rf $(SERVER) $(CLIENT)
+	@make -C ft_printf fclean
 
 re: fclean all
 

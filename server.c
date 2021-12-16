@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:29:22 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:24:53 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/16 17:25:00 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	assemble_char(unsigned char *n, int bit, int *shift)
 {
 	*n |= bit;
 	if (*shift != 7)
-		(*n) <<= 1;
+		*n <<= 1;
 	*shift += 1;
 	if (*shift == 8)
 	{
@@ -45,7 +45,8 @@ int	main(void)
 	ft_printf("The Server's PID is [%d]\n", getpid());
 	g_c.shift = 0;
 	g_c.chr = 0b00000000;
-	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = handle_input;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);

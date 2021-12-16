@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 23:29:03 by yanab             #+#    #+#             */
-/*   Updated: 2021/12/13 03:18:38 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/16 17:24:44 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,28 @@ int	get_nth_bit(unsigned char c, int n)
 	unsigned char	comp_c;
 
 	comp_c = 0b10000000;
-	return ((c & (comp_c >> (n - 1))) >> (8 - n));
+	return (c & (comp_c >> n));
 }
 
-void	send_char(int server_pid, char chr)
+void	send_msg(int server_pid, char *str)
 {
+	int	i;
 	int	j;
 
-	j = 1;
-	while (j <= 8)
+	i = 0;
+	while (str[i])
 	{
-		if (!get_nth_bit(chr, j))
-			kill(server_pid, SIGUSR1);
-		else
-			kill(server_pid, SIGUSR2);
-		usleep(100);
-		j++;
+		j = 0;
+		while (j < 8)
+		{
+			if (!get_nth_bit(str[i], j))
+				kill(server_pid, SIGUSR1);
+			else
+				kill(server_pid, SIGUSR2);
+			usleep(100);
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -44,7 +50,6 @@ void	confirm_sent(int sig)
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	int		server_pid;
 	char	*message;
 
@@ -52,12 +57,15 @@ int	main(int argc, char **argv)
 		ft_printf("Usage: ./client <Server PID> <Message>\n");
 	else
 	{
-		i = 0;
 		server_pid = ft_atoi(argv[1]);
+		if (server_pid <= 0)
+		{
+			ft_printf("Error: PID [%d] is invalid\n", server_pid);
+			exit(0);
+		}
 		message = ft_strjoin(argv[2], "\n");
 		signal(SIGUSR1, confirm_sent);
-		while (message[i])
-			send_char(server_pid, message[i++]);
+		send_msg(server_pid, message);
 	}
 	return (0);
 }
