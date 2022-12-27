@@ -12,7 +12,7 @@
 
 #include "minitalk.h"
 
-t_char	g_c;
+t_char	*g_c;
 
 void	assemble_char(unsigned char *n, int bit, int *shift)
 {
@@ -34,7 +34,7 @@ void	handle_input(int sig, siginfo_t *info, void *context)
 
 	(void)context;
 	client_pid = info->si_pid;
-	assemble_char(&(g_c.chr), sig != SIGUSR1, &(g_c.shift));
+	assemble_char(&(g_c->chr), sig != SIGUSR1, &(g_c->shift));
 	kill(client_pid, SIGUSR1);
 }
 
@@ -42,9 +42,10 @@ int	main(void)
 {
 	struct sigaction	sa;
 
+	g_c = malloc(sizeof(t_char));
 	ft_printf("The Server's PID is [%d]\n", getpid());
-	g_c.shift = 0;
-	g_c.chr = 0b00000000;
+	g_c->shift = 0;
+	g_c->chr = 0b00000000;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = handle_input;
